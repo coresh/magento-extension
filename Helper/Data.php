@@ -161,16 +161,16 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * @return mixed
+     * @return bool|array
      */
-    public function getIcecatUri(Product $product, $language)
+    public function getIcecatQuery(Product $product, $language): bool|array
     {
         $username = $this->getUsername();
         if (!empty($this->getGTINCode())) {
             $gtinCode = $this->getGTINCode();
             $gtinCodeData = $product->getData($gtinCode);
             if (!empty($gtinCodeData)) {
-                return '?UserName=' . $username . '&Language=' . $language . '&GTIN=' . $gtinCodeData;
+                return ['UserName' => $username, 'Language' => $language, 'GTIN' => $gtinCodeData];
             } elseif (!empty($this->getProductCode()) && !empty($this->getBrandCode())) {
                 $productCode = $this->getProductCode();
                 $brandCode = $this->getBrandCode();
@@ -183,7 +183,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
                 }
 
                 if (!empty($productCodeData) && !empty($brandCodeData)) {
-                    return '?UserName=' . $username . '&Language=' . $language . '&Brand=' . $brandCodeData . '&ProductCode=' . $productCodeData;
+                    return ['UserName' => $username, 'Language' => $language, 'Brand' => $brandCodeData, 'ProductCode' => $productCodeData];
                 }
             }
         } elseif (!empty($this->getProductCode()) && !empty($this->getBrandCode())) {
@@ -198,12 +198,12 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             }
 
             if (!empty($productCodeData) && !empty($brandCodeData)) {
-                return '?UserName=' . $username . '&Language=' . $language . '&Brand=' . $brandCodeData . '&ProductCode=' . $productCodeData;
+                return ['UserName' => $username, 'Language' => $language, 'Brand' => $brandCodeData, 'ProductCode' => $productCodeData];
             } elseif (!empty($this->getGTINCode())) {
                 $gtinCode = $this->getGTINCode();
                 $gtinCodeData = $product->getData($gtinCode);
                 if (!empty($gtinCodeData)) {
-                    return '?UserName=' . $username . '&Language=' . $language . '&GTIN=' . $gtinCodeData;
+                    return ['UserName' => $username, 'Language' => $language, 'GTIN' => $gtinCodeData];
                 }
             }
         }
