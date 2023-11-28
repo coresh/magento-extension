@@ -106,6 +106,7 @@ class Queue
     private $storeManager;
     private $attributeRepository;
 
+
     /**
      * @param CollectionFactory $collectionFactory
      * @param ResourceConnection $resourceConnection
